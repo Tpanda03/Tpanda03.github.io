@@ -1,41 +1,1942 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>My GitHub Repositories</title>
-        <link rel="stylesheet" type="text/css" href="styles.css">
-    </head>
-    <body>
-        <header>
-            <h1>Welcome to my GitHub Page!</h1>
-        </header>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tejash Panda — Robotics & Embedded Systems</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+/* ─── TOKENS ─────────────────────────────────────── */
+:root {
+  --bg:        #0c0d0f;
+  --bg2:       #111318;
+  --bg3:       #181b22;
+  --border:    #1f2330;
+  --muted:     #3a3f52;
+  --text-dim:  #6b7396;
+  --text:      #c8cfe8;
+  --text-hi:   #edf0ff;
+  --accent:    #f0a500;
+  --accent2:   #e06c3a;
+  --green:     #3ecf74;
+  --blue:      #4f9cf9;
+  --red:       #e05c5c;
+  --radius:    8px;
+  --mono: 'DM Mono', monospace;
+  --sans: 'DM Sans', sans-serif;
+  --display: 'Syne', sans-serif;
+}
 
-        <nav>
-            <ul>
-                <li><a href="#repo1">Repository 1</a></li>
-                <li><a href="#repo2">Repository 2</a></li>
-                <!-- Add more repositories here -->
-            </ul>
-        </nav>
+/* ─── RESET ──────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; border: none; background: none; font-family: inherit; }
+input, textarea { font-family: inherit; }
 
-        <main>
-            <section id="repo1">
-                <h2>Repository 1</h2>
-                <p>Description of Repository 1</p>
-                <a href="link_to_github_repo1">Link to Repository 1</a>
-            </section>
+/* ─── NOISE OVERLAY ──────────────────────────────── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.6;
+}
 
-            <section id="repo2">
-                <h2>Repository 2</h2>
-                <p>Description of Repository 2</p>
-                <a href="link_to_github_repo2">Link to Repository 2</a>
-            </section>
+/* ─── NAV ─────────────────────────────────────────── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 48px;
+  background: rgba(12,13,15,0.85);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--accent);
+  letter-spacing: 0.05em;
+}
+.nav-links {
+  display: flex;
+  gap: 36px;
+  list-style: none;
+}
+.nav-links a {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-dim);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--text-hi); }
+.nav-private-btn {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: all 0.2s;
+}
+.nav-private-btn:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
 
-            <!-- Add more repository sections here -->
-        </main>
+/* ─── LAYOUT ─────────────────────────────────────── */
+section { position: relative; z-index: 1; }
+.container { max-width: 1000px; margin: 0 auto; padding: 0 32px; }
 
-        <footer>
-            <p>&copy; 2023 My GitHub Repositories</p>
-        </footer>
-    </body>
+/* ─── HERO ───────────────────────────────────────── */
+#hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 80px;
+}
+.hero-inner { max-width: 1000px; margin: 0 auto; padding: 0 32px; }
+.hero-label {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--accent);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: fadeUp 0.6s 0.1s forwards;
+}
+.hero-name {
+  font-family: var(--display);
+  font-size: clamp(52px, 8vw, 96px);
+  font-weight: 800;
+  color: var(--text-hi);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
+  opacity: 0;
+  animation: fadeUp 0.6s 0.25s forwards;
+}
+.hero-name span { color: var(--accent); }
+.hero-title {
+  font-family: var(--sans);
+  font-size: clamp(16px, 2vw, 22px);
+  font-weight: 300;
+  color: var(--text-dim);
+  max-width: 600px;
+  margin-bottom: 40px;
+  opacity: 0;
+  animation: fadeUp 0.6s 0.4s forwards;
+}
+.hero-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 48px;
+  opacity: 0;
+  animation: fadeUp 0.6s 0.55s forwards;
+}
+.tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 5px 12px;
+  border-radius: 4px;
+  letter-spacing: 0.06em;
+}
+.tag-outline {
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+}
+.hero-links {
+  display: flex;
+  gap: 16px;
+  opacity: 0;
+  animation: fadeUp 0.6s 0.7s forwards;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 22px;
+  border-radius: var(--radius);
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  transition: all 0.2s;
+}
+.btn-accent {
+  background: var(--accent);
+  color: #0c0d0f;
+}
+.btn-accent:hover { background: #ffc02e; transform: translateY(-1px); }
+.btn-ghost {
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+}
+.btn-ghost:hover { border-color: var(--text-dim); color: var(--text); }
+
+/* scroll indicator */
+.hero-scroll {
+  position: absolute;
+  bottom: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  animation: fadeUp 0.6s 1s forwards;
+}
+.hero-scroll span {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.scroll-line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--muted), transparent);
+  animation: scrollLine 1.6s ease-in-out infinite;
+}
+@keyframes scrollLine {
+  0%, 100% { opacity: 0.3; transform: scaleY(1); }
+  50% { opacity: 1; transform: scaleY(0.7); }
+}
+
+/* ─── SECTION HEADERS ────────────────────────────── */
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 20px;
+  margin-bottom: 48px;
+}
+.section-num {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--accent);
+}
+.section-title {
+  font-family: var(--display);
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 700;
+  color: var(--text-hi);
+  letter-spacing: -0.02em;
+}
+.section-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ─── ABOUT ──────────────────────────────────────── */
+#about { padding: 120px 0 80px; }
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: start;
+}
+.about-text p {
+  color: var(--text);
+  margin-bottom: 16px;
+  font-weight: 300;
+  font-size: 15px;
+}
+.about-text p:last-child { margin-bottom: 0; }
+.about-text strong { color: var(--text-hi); font-weight: 500; }
+.about-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+}
+.stat-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  padding: 24px;
+  border-radius: var(--radius);
+  transition: border-color 0.2s;
+}
+.stat-card:hover { border-color: var(--muted); }
+.stat-card:first-child { border-radius: 8px 8px 0 0; grid-column: span 2; }
+.stat-num {
+  font-family: var(--display);
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.stat-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ─── PROJECTS ───────────────────────────────────── */
+#projects { padding: 80px 0; }
+.filter-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 32px;
+}
+.filter-btn {
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 6px 14px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: all 0.2s;
+}
+.filter-btn.active,
+.filter-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2px;
+}
+.project-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.25s, transform 0.25s;
+  cursor: default;
+}
+.project-card:hover {
+  border-color: var(--muted);
+  transform: translateY(-2px);
+}
+.project-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 14px;
+}
+.status-badge {
+  font-family: var(--mono);
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 3px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.status-done { background: rgba(62,207,116,0.12); color: var(--green); }
+.status-wip { background: rgba(79,156,249,0.12); color: var(--blue); }
+.status-planned { background: rgba(240,165,0,0.12); color: var(--accent); }
+.project-icon {
+  font-size: 22px;
+  line-height: 1;
+}
+.project-title {
+  font-family: var(--display);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-hi);
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+.project-desc {
+  font-size: 13px;
+  color: var(--text-dim);
+  flex: 1;
+  margin-bottom: 18px;
+  font-weight: 300;
+}
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+.project-tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  padding: 3px 8px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  color: var(--text-dim);
+}
+.project-links {
+  display: flex;
+  gap: 12px;
+  margin-top: auto;
+}
+.project-link {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: color 0.2s;
+}
+.project-link:hover { color: var(--accent); }
+
+/* ─── EXPERIENCE ─────────────────────────────────── */
+#experience { padding: 80px 0; }
+.timeline {
+  position: relative;
+  padding-left: 32px;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 8px; bottom: 8px;
+  width: 1px;
+  background: var(--border);
+}
+.timeline-item {
+  position: relative;
+  margin-bottom: 48px;
+}
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -36px;
+  top: 8px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  background: var(--bg);
+}
+.timeline-date {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+}
+.timeline-role {
+  font-family: var(--display);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-hi);
+  margin-bottom: 2px;
+}
+.timeline-company {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-bottom: 12px;
+}
+.timeline-bullets {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.timeline-bullets li {
+  font-size: 14px;
+  color: var(--text);
+  font-weight: 300;
+  padding-left: 16px;
+  position: relative;
+}
+.timeline-bullets li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--muted);
+  font-size: 11px;
+  top: 2px;
+}
+
+/* ─── SKILLS ─────────────────────────────────────── */
+#skills { padding: 80px 0 120px; }
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 2px;
+}
+.skill-group {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+}
+.skill-group-title {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--accent);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.skill-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.skill-item {
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 4px 10px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text);
+}
+
+/* ─── FOOTER ─────────────────────────────────────── */
+footer {
+  position: relative;
+  z-index: 1;
+  border-top: 1px solid var(--border);
+  padding: 36px 0;
+}
+.footer-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.footer-copy {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+}
+.footer-links {
+  display: flex;
+  gap: 24px;
+}
+.footer-links a {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--accent); }
+
+/* ─── MODAL OVERLAY ──────────────────────────────── */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(12,13,15,0.92);
+  backdrop-filter: blur(8px);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s;
+}
+.overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+.modal {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 40px;
+  width: 420px;
+  max-width: 90vw;
+  transform: translateY(16px);
+  transition: transform 0.25s;
+}
+.overlay.open .modal { transform: translateY(0); }
+.modal-title {
+  font-family: var(--display);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-hi);
+  margin-bottom: 8px;
+}
+.modal-sub {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-bottom: 32px;
+}
+.pin-dots {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+.pin-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid var(--muted);
+  background: transparent;
+  transition: all 0.15s;
+}
+.pin-dot.filled {
+  border-color: var(--accent);
+  background: var(--accent);
+}
+.pin-pad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.pin-key {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  font-family: var(--display);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-hi);
+  transition: all 0.15s;
+}
+.pin-key:hover { background: var(--border); }
+.pin-key:active { transform: scale(0.95); }
+.pin-key.del { font-size: 14px; color: var(--text-dim); font-family: var(--mono); }
+.pin-error {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--red);
+  text-align: center;
+  min-height: 20px;
+  transition: opacity 0.2s;
+}
+.modal-close {
+  position: absolute;
+  top: 16px; right: 16px;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+.modal-close:hover { color: var(--text-hi); border-color: var(--muted); }
+.modal { position: relative; }
+
+/* ─── DASHBOARD ──────────────────────────────────── */
+.dashboard-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  z-index: 150;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s;
+  overflow-y: auto;
+}
+.dashboard-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+.dashboard-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 40px;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  background: rgba(12,13,15,0.95);
+  backdrop-filter: blur(12px);
+  z-index: 10;
+}
+.dashboard-logo {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--accent);
+  letter-spacing: 0.1em;
+}
+.dashboard-tabs {
+  display: flex;
+  gap: 4px;
+}
+.dash-tab {
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 7px 16px;
+  border-radius: 6px;
+  color: var(--text-dim);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: all 0.2s;
+}
+.dash-tab:hover { color: var(--text); }
+.dash-tab.active {
+  background: var(--bg3);
+  color: var(--text-hi);
+  border: 1px solid var(--border);
+}
+.dashboard-close-btn {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  padding: 7px 14px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  letter-spacing: 0.06em;
+  transition: all 0.2s;
+}
+.dashboard-close-btn:hover { color: var(--red); border-color: var(--red); }
+.dashboard-body {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 48px 32px;
+}
+.dash-panel { display: none; }
+.dash-panel.active { display: block; }
+.dash-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+.dash-panel-title {
+  font-family: var(--display);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-hi);
+}
+.btn-add {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  background: var(--accent);
+  color: #0c0d0f;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  transition: all 0.15s;
+}
+.btn-add:hover { background: #ffc02e; }
+
+/* ─── GOALS ──────────────────────────────────────── */
+.goals-list { display: flex; flex-direction: column; gap: 8px; }
+.goal-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: border-color 0.2s;
+  group: goal;
+}
+.goal-item:hover { border-color: var(--muted); }
+.goal-check {
+  width: 18px; height: 18px;
+  border-radius: 4px;
+  border: 2px solid var(--muted);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.goal-check.done {
+  background: var(--green);
+  border-color: var(--green);
+  color: #0c0d0f;
+}
+.goal-text {
+  flex: 1;
+  font-size: 14px;
+  color: var(--text);
+}
+.goal-text.done { text-decoration: line-through; color: var(--text-dim); }
+.goal-delete {
+  opacity: 0;
+  font-size: 14px;
+  color: var(--muted);
+  transition: all 0.15s;
+  padding: 4px;
+}
+.goal-item:hover .goal-delete { opacity: 1; }
+.goal-delete:hover { color: var(--red); }
+
+/* ─── NOTES ──────────────────────────────────────── */
+.notes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.note-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  position: relative;
+}
+.note-card:hover { border-color: var(--muted); }
+.note-date {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.note-title {
+  font-family: var(--display);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-hi);
+  margin-bottom: 6px;
+}
+.note-preview {
+  font-size: 13px;
+  color: var(--text-dim);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.note-del {
+  position: absolute;
+  top: 12px; right: 12px;
+  opacity: 0;
+  font-size: 12px;
+  color: var(--muted);
+  transition: all 0.15s;
+}
+.note-card:hover .note-del { opacity: 1; }
+.note-del:hover { color: var(--red); }
+
+/* note editor */
+.note-editor {
+  display: none;
+  flex-direction: column;
+  gap: 12px;
+}
+.note-editor.active { display: flex; }
+.note-editor-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+.back-btn {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.2s;
+}
+.back-btn:hover { color: var(--accent); }
+input.field, textarea.field {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  color: var(--text-hi);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+  width: 100%;
+  resize: vertical;
+}
+input.field { font-family: var(--display); font-weight: 700; font-size: 20px; }
+textarea.field { min-height: 280px; font-weight: 300; line-height: 1.7; }
+input.field:focus, textarea.field:focus { border-color: var(--muted); }
+.save-btn {
+  align-self: flex-end;
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 8px 20px;
+  background: var(--accent);
+  color: #0c0d0f;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.15s;
+}
+.save-btn:hover { background: #ffc02e; }
+
+/* ─── TRACKER ────────────────────────────────────── */
+.tracker-cols {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.tracker-col {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+.col-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+.col-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+}
+.dot-wip { background: var(--blue); }
+.dot-done { background: var(--green); }
+.dot-backlog { background: var(--muted); }
+.col-title {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.tracker-cards { display: flex; flex-direction: column; gap: 8px; }
+.tracker-card {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 12px 14px;
+  font-size: 13px;
+  color: var(--text);
+  position: relative;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.tracker-card:hover { border-color: var(--muted); }
+.tracker-card-title { font-weight: 500; color: var(--text-hi); margin-bottom: 3px; }
+.tracker-card-sub { font-size: 11px; color: var(--text-dim); font-family: var(--mono); }
+.tracker-card-del {
+  position: absolute;
+  top: 8px; right: 10px;
+  font-size: 12px;
+  color: var(--muted);
+  opacity: 0;
+  transition: all 0.15s;
+}
+.tracker-card:hover .tracker-card-del { opacity: 1; }
+.tracker-card-del:hover { color: var(--red); }
+.add-card-btn {
+  width: 100%;
+  margin-top: 8px;
+  padding: 10px;
+  border: 1px dashed var(--border);
+  border-radius: 6px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+  text-align: center;
+  transition: all 0.2s;
+}
+.add-card-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ─── READING ────────────────────────────────────── */
+.reading-list { display: flex; flex-direction: column; gap: 6px; }
+.reading-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: border-color 0.2s;
+}
+.reading-item:hover { border-color: var(--muted); }
+.reading-type {
+  font-family: var(--mono);
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  flex-shrink: 0;
+}
+.type-book { background: rgba(240,165,0,0.12); color: var(--accent); }
+.type-paper { background: rgba(79,156,249,0.12); color: var(--blue); }
+.type-course { background: rgba(62,207,116,0.12); color: var(--green); }
+.type-video { background: rgba(224,108,58,0.12); color: var(--accent2); }
+.reading-title {
+  flex: 1;
+  font-size: 14px;
+  color: var(--text-hi);
+}
+.reading-status {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-dim);
+  flex-shrink: 0;
+}
+.reading-del {
+  opacity: 0;
+  font-size: 12px;
+  color: var(--muted);
+  transition: all 0.15s;
+}
+.reading-item:hover .reading-del { opacity: 1; }
+.reading-del:hover { color: var(--red); }
+
+/* ─── MINI MODAL (add items) ─────────────────────── */
+.mini-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(12,13,15,0.88);
+  backdrop-filter: blur(6px);
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+.mini-modal.open { opacity: 1; pointer-events: all; }
+.mini-modal-box {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 32px;
+  width: 480px;
+  max-width: 92vw;
+  transform: translateY(12px);
+  transition: transform 0.2s;
+}
+.mini-modal.open .mini-modal-box { transform: translateY(0); }
+.mini-modal-title {
+  font-family: var(--display);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-hi);
+  margin-bottom: 20px;
+}
+.field-row { display: flex; gap: 10px; margin-bottom: 10px; }
+.field-row .field { flex: 1; }
+select.field {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  color: var(--text);
+  font-size: 13px;
+  outline: none;
+  cursor: pointer;
+}
+select.field option { background: var(--bg2); }
+.mini-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 16px;
+}
+.btn-cancel {
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 8px 16px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-dim);
+  transition: all 0.15s;
+}
+.btn-cancel:hover { border-color: var(--muted); color: var(--text); }
+.btn-confirm {
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 8px 20px;
+  background: var(--accent);
+  color: #0c0d0f;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.15s;
+}
+.btn-confirm:hover { background: #ffc02e; }
+
+/* ─── ANIMATIONS ─────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.5s, transform 0.5s;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ─── RESPONSIVE ─────────────────────────────────── */
+@media (max-width: 768px) {
+  nav { padding: 14px 20px; }
+  .nav-links { display: none; }
+  .hero-inner, .container { padding: 0 20px; }
+  .about-grid { grid-template-columns: 1fr; gap: 40px; }
+  .about-stats { grid-template-columns: 1fr 1fr; }
+  .about-stats .stat-card:first-child { grid-column: span 2; }
+  .tracker-cols { grid-template-columns: 1fr; }
+  .notes-grid { grid-template-columns: 1fr; }
+  .dashboard-nav { padding: 14px 20px; flex-wrap: wrap; gap: 10px; }
+  .dashboard-tabs { flex-wrap: wrap; }
+  .footer-inner { flex-direction: column; gap: 12px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ─── NAV ──────────────────────────────────────── -->
+<nav>
+  <div class="nav-logo">tp.dev</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+  </ul>
+  <button class="nav-private-btn" onclick="openPinModal()">⌗ Private</button>
+</nav>
+
+<!-- ─── HERO ─────────────────────────────────────── -->
+<section id="hero">
+  <div class="hero-inner">
+    <p class="hero-label">// Robotics · Embedded · Autonomous Systems</p>
+    <h1 class="hero-name">Tejash<br /><span>Panda.</span></h1>
+    <p class="hero-title">MS Robotics candidate building systems that operate at the edge — sensor fusion, safety-critical control, and the hardware-software boundary.</p>
+    <div class="hero-tags">
+      <span class="tag tag-outline">IIT Chicago</span>
+      <span class="tag tag-outline">MS Robotics '26</span>
+      <span class="tag tag-outline">ECE + CS</span>
+      <span class="tag tag-outline">Ex-Intel</span>
+    </div>
+    <div class="hero-links">
+      <a href="#projects" class="btn btn-accent">View Work ↓</a>
+      <a href="https://github.com/Tpanda03" target="_blank" class="btn btn-ghost">GitHub ↗</a>
+      <a href="https://linkedin.com/in/" target="_blank" class="btn btn-ghost">LinkedIn ↗</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ─── ABOUT ────────────────────────────────────── -->
+<section id="about">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-num">01</span>
+      <h2 class="section-title">About</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>I'm a coterminal MS student at <strong>Illinois Institute of Technology</strong> studying Robotics and Autonomous Systems — expected to graduate December 2026. My undergrad was in Electrical & Computer Engineering + Computer Science.</p>
+        <p>My work lives at the intersection of <strong>embedded systems, sensor fusion, and safety-critical software</strong>. I care about systems that have to work correctly in the real world — on actual hardware, under real constraints.</p>
+        <p>Most recently I was at <strong>Intel</strong> doing RAS validation on Granite Rapids Xeon silicon. Outside of work, I contribute to EcoCAR as a sensor fusion engineer and have a published paper from my capstone project PULSE at IEEE EIT 2025.</p>
+        <p>My thesis work focuses on an <strong>uncertainty-aware safety controller for ACC/LCC</strong> grounded in the ISO 21448 SOTIF standard — bringing conformal prediction and formal safety frameworks to real autonomous vehicles.</p>
+      </div>
+      <div class="about-stats reveal">
+        <div class="stat-card">
+          <div class="stat-num">2026</div>
+          <div class="stat-label">MS graduation target</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">4+</div>
+          <div class="stat-label">Published / shipped projects</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">3×</div>
+          <div class="stat-label">Semesters as TA</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PROJECTS ─────────────────────────────────── -->
+<section id="projects">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Projects</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="filter-bar reveal">
+      <button class="filter-btn active" onclick="filterProjects('all', this)">All</button>
+      <button class="filter-btn" onclick="filterProjects('done', this)">Shipped</button>
+      <button class="filter-btn" onclick="filterProjects('wip', this)">In Progress</button>
+      <button class="filter-btn" onclick="filterProjects('planned', this)">Planned</button>
+    </div>
+    <div class="projects-grid" id="projectsGrid">
+      <!-- populated by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ─── EXPERIENCE ────────────────────────────────── -->
+<section id="experience">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-num">03</span>
+      <h2 class="section-title">Experience</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item reveal">
+        <div class="timeline-date">Summer 2024</div>
+        <div class="timeline-role">Hardware Engineering Intern</div>
+        <div class="timeline-company">Intel Corporation · Santa Clara, CA</div>
+        <ul class="timeline-bullets">
+          <li>RAS (Reliability, Availability, Serviceability) validation for Granite Rapids / Xeon silicon</li>
+          <li>Wrote and executed test plans targeting memory error injection, MCA handling, and recovery flows</li>
+          <li>Worked across pre-silicon and post-silicon environments with cross-functional validation teams</li>
+        </ul>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-date">2023 – Present</div>
+        <div class="timeline-role">Sensor Fusion Engineer</div>
+        <div class="timeline-company">EcoCAR EV Challenge · IIT Chicago</div>
+        <ul class="timeline-bullets">
+          <li>Sensor fusion pipeline development for a connected and automated vehicle platform</li>
+          <li>Integrating multi-modal sensor data (LiDAR, camera, radar) for perception and localization</li>
+        </ul>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-date">2023 – Present</div>
+        <div class="timeline-role">Teaching Assistant</div>
+        <div class="timeline-company">Illinois Tech · Prof. Dan Tomal</div>
+        <ul class="timeline-bullets">
+          <li>TA across multiple semesters for ECE coursework</li>
+          <li>Led lab sections, graded assignments, held office hours</li>
+        </ul>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-date">2022 – 2025</div>
+        <div class="timeline-role">Android Developer & BLE Integration Lead</div>
+        <div class="timeline-company">PULSE Capstone Project · IIT Chicago</div>
+        <ul class="timeline-bullets">
+          <li>Built Android app (Jetpack Compose, MVVM) for real-time mmWave radar visualization</li>
+          <li>Designed BLE GATT server on Raspberry Pi 4, 21-byte packet format at 20 Hz</li>
+          <li>Published at IEEE EIT 2025</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SKILLS ────────────────────────────────────── -->
+<section id="skills">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-num">04</span>
+      <h2 class="section-title">Skills</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-group reveal">
+        <div class="skill-group-title">Languages</div>
+        <div class="skill-items">
+          <span class="skill-item">Python</span>
+          <span class="skill-item">C / C++</span>
+          <span class="skill-item">Kotlin</span>
+          <span class="skill-item">Java</span>
+          <span class="skill-item">MATLAB</span>
+          <span class="skill-item">Bash</span>
+        </div>
+      </div>
+      <div class="skill-group reveal">
+        <div class="skill-group-title">Embedded / HW</div>
+        <div class="skill-items">
+          <span class="skill-item">Raspberry Pi</span>
+          <span class="skill-item">BLE GATT</span>
+          <span class="skill-item">SPI / I²C</span>
+          <span class="skill-item">mmWave Radar</span>
+          <span class="skill-item">SDR (Pluto ADALM)</span>
+          <span class="skill-item">systemd</span>
+        </div>
+      </div>
+      <div class="skill-group reveal">
+        <div class="skill-group-title">Robotics / CV</div>
+        <div class="skill-items">
+          <span class="skill-item">Sensor Fusion</span>
+          <span class="skill-item">ROS</span>
+          <span class="skill-item">OpenCV</span>
+          <span class="skill-item">PyTorch</span>
+          <span class="skill-item">CFAR</span>
+          <span class="skill-item">Conformal Prediction</span>
+        </div>
+      </div>
+      <div class="skill-group reveal">
+        <div class="skill-group-title">Mobile / Software</div>
+        <div class="skill-items">
+          <span class="skill-item">Android (Jetpack Compose)</span>
+          <span class="skill-item">MVVM</span>
+          <span class="skill-item">Git</span>
+          <span class="skill-item">Linux</span>
+          <span class="skill-item">Simulink</span>
+        </div>
+      </div>
+      <div class="skill-group reveal">
+        <div class="skill-group-title">Standards / Frameworks</div>
+        <div class="skill-items">
+          <span class="skill-item">ISO 21448 SOTIF</span>
+          <span class="skill-item">IEEE</span>
+          <span class="skill-item">RAS</span>
+          <span class="skill-item">MCA</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ────────────────────────────────────── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-copy">© 2025 Tejash Panda · Built with intention, deployed free</div>
+    <div class="footer-links">
+      <a href="https://github.com/Tpanda03" target="_blank">GitHub</a>
+      <a href="mailto:tejash@example.com">Email</a>
+      <a href="#" onclick="openPinModal(); return false;">⌗ Private</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ─── PIN MODAL ────────────────────────────────── -->
+<div class="overlay" id="pinOverlay">
+  <div class="modal">
+    <button class="modal-close" onclick="closePinModal()">✕</button>
+    <div class="modal-title" id="pinTitle">Private Zone</div>
+    <div class="modal-sub" id="pinSub">Enter your PIN to access the private dashboard.</div>
+    <div class="pin-dots" id="pinDots">
+      <div class="pin-dot" id="d0"></div>
+      <div class="pin-dot" id="d1"></div>
+      <div class="pin-dot" id="d2"></div>
+      <div class="pin-dot" id="d3"></div>
+    </div>
+    <div class="pin-pad">
+      <button class="pin-key" onclick="pinPress('1')">1</button>
+      <button class="pin-key" onclick="pinPress('2')">2</button>
+      <button class="pin-key" onclick="pinPress('3')">3</button>
+      <button class="pin-key" onclick="pinPress('4')">4</button>
+      <button class="pin-key" onclick="pinPress('5')">5</button>
+      <button class="pin-key" onclick="pinPress('6')">6</button>
+      <button class="pin-key" onclick="pinPress('7')">7</button>
+      <button class="pin-key" onclick="pinPress('8')">8</button>
+      <button class="pin-key" onclick="pinPress('9')">9</button>
+      <button class="pin-key" style="opacity:0;pointer-events:none"></button>
+      <button class="pin-key" onclick="pinPress('0')">0</button>
+      <button class="pin-key del" onclick="pinDel()">⌫</button>
+    </div>
+    <div class="pin-error" id="pinError"></div>
+  </div>
+</div>
+
+<!-- ─── DASHBOARD ────────────────────────────────── -->
+<div class="dashboard-overlay" id="dashboard">
+  <div class="dashboard-nav">
+    <div class="dashboard-logo">⌗ private</div>
+    <div class="dashboard-tabs">
+      <button class="dash-tab active" onclick="switchTab('goals', this)">Goals</button>
+      <button class="dash-tab" onclick="switchTab('notes', this)">Notes</button>
+      <button class="dash-tab" onclick="switchTab('tracker', this)">Tracker</button>
+      <button class="dash-tab" onclick="switchTab('reading', this)">Reading</button>
+    </div>
+    <button class="dashboard-close-btn" onclick="closeDashboard()">✕ Close</button>
+  </div>
+  <div class="dashboard-body">
+
+    <!-- GOALS -->
+    <div class="dash-panel active" id="panel-goals">
+      <div class="dash-panel-header">
+        <div class="dash-panel-title">Goals</div>
+        <button class="btn-add" onclick="openMini('goal')">+ Add Goal</button>
+      </div>
+      <div class="goals-list" id="goalsList"></div>
+    </div>
+
+    <!-- NOTES -->
+    <div class="dash-panel" id="panel-notes">
+      <div class="dash-panel-header">
+        <div class="dash-panel-title" id="notesPanelTitle">Notes</div>
+        <button class="btn-add" id="notesAddBtn" onclick="openNoteEditor(null)">+ New Note</button>
+      </div>
+      <div id="notesGridWrap">
+        <div class="notes-grid" id="notesGrid"></div>
+      </div>
+      <div class="note-editor" id="noteEditor">
+        <div class="note-editor-header">
+          <button class="back-btn" onclick="closeNoteEditor()">← Notes</button>
+        </div>
+        <input class="field" id="noteTitleInput" placeholder="Note title..." />
+        <textarea class="field" id="noteBodyInput" placeholder="Write something..."></textarea>
+        <button class="save-btn" onclick="saveNote()">Save</button>
+      </div>
+    </div>
+
+    <!-- TRACKER -->
+    <div class="dash-panel" id="panel-tracker">
+      <div class="dash-panel-header">
+        <div class="dash-panel-title">Project Tracker</div>
+      </div>
+      <div class="tracker-cols">
+        <div class="tracker-col" id="col-wip">
+          <div class="col-header"><div class="col-dot dot-wip"></div><div class="col-title">In Progress</div></div>
+          <div class="tracker-cards" id="cards-wip"></div>
+          <button class="add-card-btn" onclick="openMini('tracker', 'wip')">+ Add</button>
+        </div>
+        <div class="tracker-col" id="col-done">
+          <div class="col-header"><div class="col-dot dot-done"></div><div class="col-title">Done</div></div>
+          <div class="tracker-cards" id="cards-done"></div>
+          <button class="add-card-btn" onclick="openMini('tracker', 'done')">+ Add</button>
+        </div>
+        <div class="tracker-col" id="col-backlog">
+          <div class="col-header"><div class="col-dot dot-backlog"></div><div class="col-title">Backlog</div></div>
+          <div class="tracker-cards" id="cards-backlog"></div>
+          <button class="add-card-btn" onclick="openMini('tracker', 'backlog')">+ Add</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- READING -->
+    <div class="dash-panel" id="panel-reading">
+      <div class="dash-panel-header">
+        <div class="dash-panel-title">Reading List</div>
+        <button class="btn-add" onclick="openMini('reading')">+ Add</button>
+      </div>
+      <div class="reading-list" id="readingList"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ─── MINI MODAL ────────────────────────────────── -->
+<div class="mini-modal" id="miniModal">
+  <div class="mini-modal-box" id="miniModalBox">
+    <!-- content injected -->
+  </div>
+</div>
+
+<!-- ─── SCRIPTS ──────────────────────────────────── -->
+<script>
+/* ========================================================
+   DATA — pre-seed with real projects (editable)
+   ======================================================== */
+const PROJECTS = [
+  {
+    id: 1, status: 'done', icon: '📡',
+    title: 'PULSE',
+    desc: 'Portable UAV Life-detection System for Emergency Scenarios. mmWave radar (RD-03D, LD2410C) + Raspberry Pi 4 BLE GATT server + Android app for real-time detection visualization. Published IEEE EIT 2025.',
+    tags: ['BLE GATT', 'mmWave Radar', 'Android', 'Jetpack Compose', 'MVVM', 'Raspberry Pi'],
+    links: [{ label: 'IEEE EIT 2025', href: '#' }]
+  },
+  {
+    id: 2, status: 'wip', icon: '🚗',
+    title: 'MS Thesis — SOTIF Safety Controller',
+    desc: 'Uncertainty-aware safety controller for ACC/LCC systems grounded in ISO 21448 SOTIF. Differentiator: conformal prediction + formal SOTIF framework + real hardware deployment.',
+    tags: ['ISO 21448 SOTIF', 'Conformal Prediction', 'ACC', 'LCC', 'Python', 'Autonomous Vehicles'],
+    links: [{ label: 'arXiv ref', href: 'https://arxiv.org/abs/2412.03792' }]
+  },
+  {
+    id: 3, status: 'wip', icon: '⚡',
+    title: 'EcoCAR Sensor Fusion',
+    desc: 'Multi-modal sensor fusion pipeline for the EcoCAR EV Challenge. Integrating LiDAR, camera, and radar data for perception and localization on a connected automated vehicle.',
+    tags: ['Sensor Fusion', 'LiDAR', 'Camera', 'Radar', 'ROS', 'MATLAB'],
+    links: []
+  },
+  {
+    id: 4, status: 'done', icon: '🤖',
+    title: 'MobileNet Object Detection',
+    desc: 'ECE 565 final — MobileNetV1 with ECA + residual connections (67.37% → 70.22% Top-1 CIFAR-100) and MobileNetV2 + TinyYOLOv3 on PASCAL VOC with CIoU loss, PANet neck, decoupled head.',
+    tags: ['PyTorch', 'MobileNet', 'YOLOv3', 'CIFAR-100', 'PASCAL VOC', 'Computer Vision'],
+    links: []
+  },
+  {
+    id: 5, status: 'done', icon: '📻',
+    title: 'SDR Micromovement Detection',
+    desc: 'Pluto ADALM SDR pipeline in MATLAB/Simulink for search-and-rescue UAV micromovement detection. CFAR, Doppler/FFT processing, clutter suppression.',
+    tags: ['SDR', 'MATLAB', 'Simulink', 'CFAR', 'Doppler', 'UAV'],
+    links: []
+  },
+  {
+    id: 6, status: 'planned', icon: '🔧',
+    title: 'Bare-Metal RTOS Project',
+    desc: 'Build a small real-time embedded system project on an MCU (STM32 or similar) to develop RTOS / bare-metal C/C++ fluency. Target: SPI/I2C peripheral drivers, task scheduler.',
+    tags: ['C/C++', 'RTOS', 'STM32', 'SPI', 'I2C', 'Embedded'],
+    links: []
+  },
+];
+
+/* ========================================================
+   PROJECTS — render + filter
+   ======================================================== */
+function renderProjects(filter = 'all') {
+  const grid = document.getElementById('projectsGrid');
+  grid.innerHTML = '';
+  PROJECTS.filter(p => filter === 'all' || p.status === filter).forEach(p => {
+    const statusMap = { done: ['status-done','Shipped'], wip: ['status-wip','In Progress'], planned: ['status-planned','Planned'] };
+    const [cls, label] = statusMap[p.status];
+    const linksHtml = p.links.map(l => `<a href="${l.href}" target="_blank" class="project-link">↗ ${l.label}</a>`).join('');
+    grid.innerHTML += `
+      <div class="project-card" data-status="${p.status}">
+        <div class="project-card-top">
+          <span class="project-icon">${p.icon}</span>
+          <span class="status-badge ${cls}">${label}</span>
+        </div>
+        <div class="project-title">${p.title}</div>
+        <div class="project-desc">${p.desc}</div>
+        <div class="project-tags">${p.tags.map(t=>`<span class="project-tag">${t}</span>`).join('')}</div>
+        <div class="project-links">${linksHtml}</div>
+      </div>`;
+  });
+}
+function filterProjects(filter, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderProjects(filter);
+}
+renderProjects();
+
+/* ========================================================
+   SCROLL REVEAL
+   ======================================================== */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+/* ========================================================
+   PIN SYSTEM
+   ======================================================== */
+let pinBuffer = '';
+let isSettingPin = false;
+let confirmBuffer = '';
+
+async function sha256(str) {
+  const buf = new TextEncoder().encode(str);
+  const digest = await crypto.subtle.digest('SHA-256', buf);
+  return Array.from(new Uint8Array(digest)).map(b => b.toString(16).padStart(2,'0')).join('');
+}
+
+function openPinModal() {
+  pinBuffer = '';
+  updateDots();
+  document.getElementById('pinError').textContent = '';
+  const stored = localStorage.getItem('portfolio_pin');
+  if (!stored) {
+    isSettingPin = true;
+    document.getElementById('pinTitle').textContent = 'Set Your PIN';
+    document.getElementById('pinSub').textContent = 'Choose a 4-digit PIN for your private dashboard.';
+  } else {
+    isSettingPin = false;
+    document.getElementById('pinTitle').textContent = 'Private Zone';
+    document.getElementById('pinSub').textContent = 'Enter your PIN to access the private dashboard.';
+  }
+  document.getElementById('pinOverlay').classList.add('open');
+}
+function closePinModal() {
+  pinBuffer = '';
+  confirmBuffer = '';
+  updateDots();
+  document.getElementById('pinOverlay').classList.remove('open');
+}
+
+function updateDots() {
+  for (let i = 0; i < 4; i++) {
+    document.getElementById(`d${i}`).classList.toggle('filled', i < pinBuffer.length);
+  }
+}
+
+async function pinPress(digit) {
+  if (pinBuffer.length >= 4) return;
+  pinBuffer += digit;
+  updateDots();
+  if (pinBuffer.length === 4) {
+    await handlePin();
+  }
+}
+function pinDel() {
+  pinBuffer = pinBuffer.slice(0, -1);
+  updateDots();
+  document.getElementById('pinError').textContent = '';
+}
+
+async function handlePin() {
+  if (isSettingPin) {
+    if (!confirmBuffer) {
+      confirmBuffer = pinBuffer;
+      pinBuffer = '';
+      updateDots();
+      document.getElementById('pinTitle').textContent = 'Confirm PIN';
+      document.getElementById('pinSub').textContent = 'Enter the same PIN again to confirm.';
+      return;
+    }
+    if (pinBuffer === confirmBuffer) {
+      const h = await sha256(pinBuffer);
+      localStorage.setItem('portfolio_pin', h);
+      closePinModal();
+      openDashboard();
+    } else {
+      pinBuffer = ''; confirmBuffer = '';
+      updateDots();
+      document.getElementById('pinError').textContent = 'PINs did not match. Try again.';
+      document.getElementById('pinTitle').textContent = 'Set Your PIN';
+      document.getElementById('pinSub').textContent = 'Choose a 4-digit PIN for your private dashboard.';
+      isSettingPin = true;
+    }
+    return;
+  }
+  const stored = localStorage.getItem('portfolio_pin');
+  const entered = await sha256(pinBuffer);
+  if (entered === stored) {
+    closePinModal();
+    openDashboard();
+  } else {
+    pinBuffer = '';
+    updateDots();
+    const el = document.getElementById('pinError');
+    el.textContent = 'Incorrect PIN.';
+    setTimeout(() => { el.textContent = ''; }, 1800);
+  }
+}
+
+/* ========================================================
+   DASHBOARD
+   ======================================================== */
+function openDashboard() {
+  document.getElementById('dashboard').classList.add('open');
+  loadGoals(); loadNotes(); loadTracker(); loadReading();
+}
+function closeDashboard() {
+  document.getElementById('dashboard').classList.remove('open');
+}
+function switchTab(name, btn) {
+  document.querySelectorAll('.dash-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.dash-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(`panel-${name}`).classList.add('active');
+}
+
+/* ========================================================
+   GOALS
+   ======================================================== */
+function loadGoals() {
+  const goals = getStore('goals');
+  const list = document.getElementById('goalsList');
+  list.innerHTML = '';
+  if (!goals.length) {
+    list.innerHTML = `<div style="font-family:var(--mono);font-size:12px;color:var(--text-dim);padding:24px 0;">No goals yet. Add your first one.</div>`;
+    return;
+  }
+  goals.forEach((g, i) => {
+    list.innerHTML += `
+      <div class="goal-item">
+        <div class="goal-check ${g.done ? 'done' : ''}" onclick="toggleGoal(${i})">
+          ${g.done ? '✓' : ''}
+        </div>
+        <span class="goal-text ${g.done ? 'done' : ''}">${g.text}</span>
+        <button class="goal-delete" onclick="deleteGoal(${i})">✕</button>
+      </div>`;
+  });
+}
+function toggleGoal(i) {
+  const goals = getStore('goals');
+  goals[i].done = !goals[i].done;
+  setStore('goals', goals);
+  loadGoals();
+}
+function deleteGoal(i) {
+  const goals = getStore('goals');
+  goals.splice(i, 1);
+  setStore('goals', goals);
+  loadGoals();
+}
+
+/* ========================================================
+   NOTES
+   ======================================================== */
+let editingNoteId = null;
+function loadNotes() {
+  const notes = getStore('notes');
+  const grid = document.getElementById('notesGrid');
+  grid.innerHTML = '';
+  if (!notes.length) {
+    grid.innerHTML = `<div style="font-family:var(--mono);font-size:12px;color:var(--text-dim);padding:24px 0;">No notes yet.</div>`;
+    return;
+  }
+  notes.forEach((n, i) => {
+    grid.innerHTML += `
+      <div class="note-card" onclick="openNoteEditor(${i})">
+        <div class="note-date">${n.date}</div>
+        <div class="note-title">${n.title || 'Untitled'}</div>
+        <div class="note-preview">${n.body || ''}</div>
+        <button class="note-del" onclick="deleteNote(event, ${i})">✕</button>
+      </div>`;
+  });
+}
+function openNoteEditor(i) {
+  editingNoteId = i;
+  const notes = getStore('notes');
+  const n = i !== null ? notes[i] : { title: '', body: '' };
+  document.getElementById('noteTitleInput').value = n.title || '';
+  document.getElementById('noteBodyInput').value = n.body || '';
+  document.getElementById('notesGridWrap').style.display = 'none';
+  document.getElementById('noteEditor').classList.add('active');
+  document.getElementById('notesPanelTitle').textContent = i !== null ? 'Edit Note' : 'New Note';
+  document.getElementById('notesAddBtn').style.display = 'none';
+}
+function closeNoteEditor() {
+  document.getElementById('notesGridWrap').style.display = '';
+  document.getElementById('noteEditor').classList.remove('active');
+  document.getElementById('notesPanelTitle').textContent = 'Notes';
+  document.getElementById('notesAddBtn').style.display = '';
+  editingNoteId = null;
+  loadNotes();
+}
+function saveNote() {
+  const title = document.getElementById('noteTitleInput').value.trim();
+  const body = document.getElementById('noteBodyInput').value.trim();
+  const notes = getStore('notes');
+  const now = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  if (editingNoteId !== null) {
+    notes[editingNoteId] = { ...notes[editingNoteId], title, body, date: now };
+  } else {
+    notes.unshift({ id: Date.now(), title, body, date: now });
+  }
+  setStore('notes', notes);
+  closeNoteEditor();
+}
+function deleteNote(e, i) {
+  e.stopPropagation();
+  const notes = getStore('notes');
+  notes.splice(i, 1);
+  setStore('notes', notes);
+  loadNotes();
+}
+
+/* ========================================================
+   TRACKER
+   ======================================================== */
+function loadTracker() {
+  ['wip', 'done', 'backlog'].forEach(col => {
+    const items = getStore('tracker').filter(t => t.col === col);
+    const container = document.getElementById(`cards-${col}`);
+    container.innerHTML = '';
+    items.forEach((t, _) => {
+      const idx = getStore('tracker').indexOf(t);
+      container.innerHTML += `
+        <div class="tracker-card">
+          <div class="tracker-card-title">${t.title}</div>
+          ${t.sub ? `<div class="tracker-card-sub">${t.sub}</div>` : ''}
+          <button class="tracker-card-del" onclick="deleteTrackerItem(${idx})">✕</button>
+        </div>`;
+    });
+  });
+}
+function deleteTrackerItem(i) {
+  const items = getStore('tracker');
+  items.splice(i, 1);
+  setStore('tracker', items);
+  loadTracker();
+}
+
+/* ========================================================
+   READING
+   ======================================================== */
+function loadReading() {
+  const items = getStore('reading');
+  const list = document.getElementById('readingList');
+  list.innerHTML = '';
+  if (!items.length) {
+    list.innerHTML = `<div style="font-family:var(--mono);font-size:12px;color:var(--text-dim);padding:24px 0;">Nothing in the queue yet.</div>`;
+    return;
+  }
+  items.forEach((r, i) => {
+    list.innerHTML += `
+      <div class="reading-item">
+        <span class="reading-type type-${r.type}">${r.type}</span>
+        <span class="reading-title">${r.title}</span>
+        <span class="reading-status">${r.status}</span>
+        <button class="reading-del" onclick="deleteReading(${i})">✕</button>
+      </div>`;
+  });
+}
+function deleteReading(i) {
+  const items = getStore('reading');
+  items.splice(i, 1);
+  setStore('reading', items);
+  loadReading();
+}
+
+/* ========================================================
+   MINI MODAL
+   ======================================================== */
+let miniType = null;
+let miniExtra = null;
+function openMini(type, extra) {
+  miniType = type;
+  miniExtra = extra;
+  const box = document.getElementById('miniModalBox');
+  if (type === 'goal') {
+    box.innerHTML = `
+      <div class="mini-modal-title">Add Goal</div>
+      <input class="field" id="miniGoalText" placeholder="e.g. Build an RTOS project on STM32" />
+      <div class="mini-modal-actions">
+        <button class="btn-cancel" onclick="closeMini()">Cancel</button>
+        <button class="btn-confirm" onclick="submitMini()">Add</button>
+      </div>`;
+  } else if (type === 'tracker') {
+    box.innerHTML = `
+      <div class="mini-modal-title">Add to ${extra === 'wip' ? 'In Progress' : extra === 'done' ? 'Done' : 'Backlog'}</div>
+      <input class="field" id="miniTrackerTitle" placeholder="Project or task name" />
+      <input class="field" style="margin-top:10px" id="miniTrackerSub" placeholder="Short description (optional)" />
+      <div class="mini-modal-actions">
+        <button class="btn-cancel" onclick="closeMini()">Cancel</button>
+        <button class="btn-confirm" onclick="submitMini()">Add</button>
+      </div>`;
+  } else if (type === 'reading') {
+    box.innerHTML = `
+      <div class="mini-modal-title">Add to Reading List</div>
+      <input class="field" id="miniReadTitle" placeholder="Title / name" />
+      <div class="field-row" style="margin-top:10px">
+        <select class="field" id="miniReadType">
+          <option value="book">Book</option>
+          <option value="paper">Paper</option>
+          <option value="course">Course</option>
+          <option value="video">Video</option>
+        </select>
+        <select class="field" id="miniReadStatus">
+          <option value="To Read">To Read</option>
+          <option value="Reading">Reading</option>
+          <option value="Done">Done</option>
+        </select>
+      </div>
+      <div class="mini-modal-actions">
+        <button class="btn-cancel" onclick="closeMini()">Cancel</button>
+        <button class="btn-confirm" onclick="submitMini()">Add</button>
+      </div>`;
+  }
+  document.getElementById('miniModal').classList.add('open');
+}
+function closeMini() {
+  document.getElementById('miniModal').classList.remove('open');
+  miniType = null; miniExtra = null;
+}
+function submitMini() {
+  if (miniType === 'goal') {
+    const text = document.getElementById('miniGoalText').value.trim();
+    if (!text) return;
+    const goals = getStore('goals');
+    goals.push({ text, done: false });
+    setStore('goals', goals);
+    closeMini(); loadGoals();
+  } else if (miniType === 'tracker') {
+    const title = document.getElementById('miniTrackerTitle').value.trim();
+    if (!title) return;
+    const sub = document.getElementById('miniTrackerSub').value.trim();
+    const items = getStore('tracker');
+    items.push({ title, sub, col: miniExtra });
+    setStore('tracker', items);
+    closeMini(); loadTracker();
+  } else if (miniType === 'reading') {
+    const title = document.getElementById('miniReadTitle').value.trim();
+    if (!title) return;
+    const type = document.getElementById('miniReadType').value;
+    const status = document.getElementById('miniReadStatus').value;
+    const items = getStore('reading');
+    items.push({ title, type, status });
+    setStore('reading', items);
+    closeMini(); loadReading();
+  }
+}
+
+/* ========================================================
+   KEYBOARD — pin entry
+   ======================================================== */
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('pinOverlay').classList.contains('open')) return;
+  if (e.key >= '0' && e.key <= '9') pinPress(e.key);
+  if (e.key === 'Backspace') pinDel();
+  if (e.key === 'Escape') closePinModal();
+});
+document.getElementById('pinOverlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('pinOverlay')) closePinModal();
+});
+
+/* ========================================================
+   STORAGE HELPERS
+   ======================================================== */
+const STORE_KEYS = { goals: 'pf_goals', notes: 'pf_notes', tracker: 'pf_tracker', reading: 'pf_reading' };
+function getStore(name) {
+  try { return JSON.parse(localStorage.getItem(STORE_KEYS[name]) || '[]'); } catch { return []; }
+}
+function setStore(name, data) {
+  localStorage.setItem(STORE_KEYS[name], JSON.stringify(data));
+}
+
+/* ========================================================
+   SEED DEFAULT DATA (first visit only)
+   ======================================================== */
+(function seedDefaults() {
+  if (!localStorage.getItem('pf_seeded')) {
+    setStore('goals', [
+      { text: 'Complete MS Thesis (uncertainty-aware SOTIF controller)', done: false },
+      { text: 'Build a bare-metal RTOS project on STM32', done: false },
+      { text: 'Get hands-on with SPI/I2C peripheral drivers', done: false },
+      { text: 'Land an Embedded Software Engineering role', done: false },
+      { text: 'Write up PULSE project as a blog post', done: false },
+    ]);
+    setStore('tracker', [
+      { title: 'MS Thesis', sub: 'SOTIF safety controller', col: 'wip' },
+      { title: 'EcoCAR Sensor Fusion', sub: 'Multi-modal perception pipeline', col: 'wip' },
+      { title: 'PULSE Capstone', sub: 'IEEE EIT 2025 — published', col: 'done' },
+      { title: 'Intel RAS Internship', sub: 'Granite Rapids / Xeon', col: 'done' },
+      { title: 'ECE 565 Final Project', sub: 'MobileNet + YOLOv3', col: 'done' },
+      { title: 'RTOS Bare-Metal Project', sub: 'STM32 target', col: 'backlog' },
+      { title: 'Portfolio Website', sub: 'This site!', col: 'done' },
+    ]);
+    setStore('reading', [
+      { title: 'ISO 21448 SOTIF Standard', type: 'paper', status: 'Reading' },
+      { title: 'Conformal Prediction for ACC (arXiv 2412.03792)', type: 'paper', status: 'Done' },
+      { title: 'Programming Embedded Systems in C/C++ — Michael Barr', type: 'book', status: 'To Read' },
+      { title: 'Real-Time Concepts for Embedded Systems — Qing Li', type: 'book', status: 'To Read' },
+      { title: 'The Art of Doing Science and Engineering — Hamming', type: 'book', status: 'To Read' },
+    ]);
+    localStorage.setItem('pf_seeded', '1');
+  }
+})();
+</script>
+</body>
 </html>
